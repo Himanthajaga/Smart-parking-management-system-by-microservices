@@ -29,7 +29,14 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "[{\"id\":1,\"available\":true},{\"id\":2,\"available\":true}]",
+							"header": []
+						}
+					]
 				},
 				{
 					"name": "Parking-reserve",
@@ -37,7 +44,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8085/api/v1/parking/reserve/{id}",
+							"raw": "http://localhost:8085/api/v1/parking/reserve/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -48,18 +55,30 @@
 								"v1",
 								"parking",
 								"reserve",
-								"{id}"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "01",
-									"disabled": true
-								}
+								"1"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "\"Reserved\"",
+							"header": []
+						},
+						{
+							"name": "Conflict",
+							"status": "409",
+							"body": "\"Parking spot is already reserved.\"",
+							"header": []
+						},
+						{
+							"name": "Not Found",
+							"status": "404",
+							"body": "\"Parking spot not found.\"",
+							"header": []
+						}
+					]
 				},
 				{
 					"name": "Parking-add",
@@ -90,7 +109,13 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Success",
+							"body": "\"Parking spot added successfully.\"",
+							"header": []
+						}
+					]
 				},
 				{
 					"name": "Update-parking",
@@ -99,7 +124,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n  \"id\": 2,\r\n  \"available\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -107,7 +132,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/v1/parking/update/{id}",
+							"raw": "http://localhost:8085/api/v1/parking/update/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -118,11 +143,18 @@
 								"v1",
 								"parking",
 								"update",
-								"{id}"
+								"2"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "\"Parking spot updated successfully.\"",
+							"header": []
+						}
+					]
 				},
 				{
 					"name": "Delete-parking",
@@ -130,7 +162,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8085/api/v1/parking/delete/{id}",
+							"raw": "http://localhost:8085/api/v1/parking/delete/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -141,11 +173,18 @@
 								"v1",
 								"parking",
 								"delete",
-								"{id}"
+								"2"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "\"Parking spot deleted successfully.\"",
+							"header": []
+						}
+					]
 				}
 			]
 		},
@@ -157,13 +196,21 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"amount\": 100.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8081/api/v1/payments/pay",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"v1",
@@ -172,7 +219,14 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "\"Payment added successfully.\"",
+							"header": []
+						}
+					]
 				},
 				{
 					"name": "Get-pay",
@@ -194,242 +248,14 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "Update-pay",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/payments/update/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"payments",
-								"update",
-								"{id}"
-							]
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "[{\"id\":1,\"amount\":100.0}]",
+							"header": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete-pay",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/payments/delete/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"payments",
-								"delete",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User-service-API",
-			"item": [
-				{
-					"name": "User-register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8083/api/v1/users/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8083",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get-all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8083/api/v1/users/all",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8083",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update-user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8083/api/v1/users/update/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8083",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"update",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete-user",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8083/api/v1/users/delete/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8083",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"delete",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Vehicle-service-API",
-			"item": [
-				{
-					"name": "Add-vehicle",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/api/v1/vehicles/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"api",
-								"v1",
-								"vehicles",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get-vehicle",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/api/v1/vehicles/user{userId}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"api",
-								"v1",
-								"vehicles",
-								"user{userId}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update-vehicle",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/api/v1/vehicles/update{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"api",
-								"v1",
-								"vehicles",
-								"update{id}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete-vehicle",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8082/api/v1/vehicles/delete/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8082",
-							"path": [
-								"api",
-								"v1",
-								"vehicles",
-								"delete",
-								"{id}"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		}
