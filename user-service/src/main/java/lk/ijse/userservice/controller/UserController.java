@@ -41,5 +41,9 @@ public class UserController {
     public AppUser updateUser(@PathVariable Long id, @RequestBody AppUser updated) {
         return service.update(id, updated);
     }
+    @GetMapping("/username/{username}")
+    public AppUser findByUsername(@PathVariable String username) {
+        return service.findByUsername(username);
+    }
 
 }

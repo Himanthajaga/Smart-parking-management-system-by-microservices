@@ -20,5 +20,7 @@ public class UserService {
         user.setRole(updated.getRole());
         return repo.save(user);
     }
-
+    public AppUser findByUsername(String username) {
+        return repo.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
