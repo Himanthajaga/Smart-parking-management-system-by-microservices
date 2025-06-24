@@ -33,7 +33,7 @@
 						{
 							"name": "Success",
 							"status": "200",
-							"body": "[{\"id\":1,\"available\":true},{\"id\":2,\"available\":true}]",
+							"body": "[{\"id\":1,\"available\":true,\"occupied\":false},{\"id\":2,\"available\":true,\"occupied\":false}]",
 							"header": []
 						}
 					]
@@ -63,7 +63,7 @@
 						{
 							"name": "Success",
 							"status": "200",
-							"body": "\"Reserved\"",
+							"body": "{\"id\":1,\"available\":false,\"occupied\":true}",
 							"header": []
 						},
 						{
@@ -81,21 +81,12 @@
 					]
 				},
 				{
-					"name": "Parking-add",
+					"name": "Parking-release",
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 2,\r\n  \"available\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8085/api/v1/parking/add",
+							"raw": "http://localhost:8085/api/v1/parking/release/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -105,26 +96,28 @@
 								"api",
 								"v1",
 								"parking",
-								"add"
+								"release",
+								"1"
 							]
 						}
 					},
 					"response": [
 						{
 							"name": "Success",
-							"body": "\"Parking spot added successfully.\"",
+							"status": "200",
+							"body": "{\"id\":1,\"available\":true,\"occupied\":false}",
 							"header": []
 						}
 					]
 				},
 				{
-					"name": "Update-parking",
+					"name": "Parking-update-status",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 2,\r\n  \"available\": false\r\n}",
+							"raw": "{\r\n  \"available\": false,\r\n  \"occupied\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -132,7 +125,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/v1/parking/update/2",
+							"raw": "http://localhost:8085/api/v1/parking/update/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -143,7 +136,7 @@
 								"v1",
 								"parking",
 								"update",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -151,37 +144,7 @@
 						{
 							"name": "Success",
 							"status": "200",
-							"body": "\"Parking spot updated successfully.\"",
-							"header": []
-						}
-					]
-				},
-				{
-					"name": "Delete-parking",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8085/api/v1/parking/delete/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"v1",
-								"parking",
-								"delete",
-								"2"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Success",
-							"status": "200",
-							"body": "\"Parking spot deleted successfully.\"",
+							"body": "{\"id\":1,\"available\":false,\"occupied\":true}",
 							"header": []
 						}
 					]
@@ -189,16 +152,16 @@
 			]
 		},
 		{
-			"name": "Payment-service-API",
+			"name": "Vehicle-service-API",
 			"item": [
 				{
-					"name": "Add-pay",
+					"name": "Register-vehicle",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1,\r\n  \"amount\": 100.0\r\n}",
+							"raw": "{\r\n  \"licensePlate\": \"ABC123\",\r\n  \"ownerName\": \"John Doe\",\r\n  \"userId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -206,16 +169,17 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/payments/pay",
+							"raw": "http://localhost:8086/api/v1/vehicles/register",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
+							"port": "8086",
 							"path": [
 								"api",
 								"v1",
-								"payments",
-								"pay"
+								"vehicles",
+								"register"
 							]
 						}
 					},
@@ -223,28 +187,29 @@
 						{
 							"name": "Success",
 							"status": "200",
-							"body": "\"Payment added successfully.\"",
+							"body": "{\"id\":1,\"licensePlate\":\"ABC123\",\"ownerName\":\"John Doe\",\"userId\":1}",
 							"header": []
 						}
 					]
 				},
 				{
-					"name": "Get-pay",
+					"name": "Simulate-entry",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/v1/payments/all",
+							"raw": "http://localhost:8086/api/v1/vehicles/enter/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8086",
 							"path": [
 								"api",
 								"v1",
-								"payments",
-								"all"
+								"vehicles",
+								"enter",
+								"1"
 							]
 						}
 					},
@@ -252,7 +217,37 @@
 						{
 							"name": "Success",
 							"status": "200",
-							"body": "[{\"id\":1,\"amount\":100.0}]",
+							"body": "{\"id\":1,\"licensePlate\":\"ABC123\",\"ownerName\":\"John Doe\",\"userId\":1,\"status\":\"Entered\"}",
+							"header": []
+						}
+					]
+				},
+				{
+					"name": "Simulate-exit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/api/v1/vehicles/exit/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"exit",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "200",
+							"body": "{\"id\":1,\"licensePlate\":\"ABC123\",\"ownerName\":\"John Doe\",\"userId\":1,\"status\":\"Exited\"}",
 							"header": []
 						}
 					]

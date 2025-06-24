@@ -37,4 +37,22 @@ public class PaymentController {
         service.repo.deleteById(id);
         return "Payment deleted successfully.";
     }
+//    Validate mock card/payment data
+    @PostMapping("/validate")
+    public String validate(@RequestBody Payment payment) {
+        // Mock validation logic
+        if (payment.getCardNumber() == null || payment.getCardNumber().isEmpty()) {
+            throw new RuntimeException("Invalid card number");
+        }
+        if (payment.getAmount() <= 0) {
+            throw new RuntimeException("Invalid payment amount");
+        }
+        return "Payment validated successfully";
+    }
+//    Generate digital receipt
+    @PostMapping("/receipt")
+    public String generateReceipt(@RequestBody Payment payment) {
+        // Mock receipt generation logic
+        return "Receipt generated for payment ID: " + payment.getId() + " with amount: " + payment.getAmount();
+    }
 }

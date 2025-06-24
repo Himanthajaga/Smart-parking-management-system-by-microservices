@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface VehicleRepository extends JpaRepository<Vehicle,  Long>{
     List<Vehicle> findByUserId(String userId);
+    List<Vehicle> findByType(String type);
+    List<Vehicle> findByInside(boolean inside);
+    List<Vehicle> findByUserIdAndType(String userId, String type);
 }
 

@@ -42,4 +42,14 @@ public class VehicleController {
     public Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle updated) {
         return service.update(id, updated);
     }
+//    Link vehicle to users
+    @GetMapping("/all")
+    public List<Vehicle> all() {
+        return service.repo.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Vehicle get(@PathVariable Long id) {
+        return service.repo.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+    }
 }

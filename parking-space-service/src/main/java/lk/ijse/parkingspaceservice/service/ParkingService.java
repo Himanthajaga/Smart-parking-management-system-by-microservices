@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ParkingService {
     @Autowired
-    private ParkingRepository repo;
+    public ParkingRepository repo;
 
     public List<ParkingSpot> findAvailableSpots() {
         return repo.findByAvailableTrue();

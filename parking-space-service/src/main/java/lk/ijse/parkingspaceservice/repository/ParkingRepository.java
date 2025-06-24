@@ -7,4 +7,9 @@ import java.util.List;
 
 public interface ParkingRepository extends JpaRepository<ParkingSpot, Long> {
     List<ParkingSpot> findByAvailableTrue();
+
+    List<ParkingSpot> findByLocation(String location);
+
+    List<ParkingSpot> findByAvailable(boolean available);
+    List<ParkingSpot> findByLocationAndAvailable(String location, boolean available);
 }
