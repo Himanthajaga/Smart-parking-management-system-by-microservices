@@ -16,3 +16,13 @@ Below is a screenshot of the Eureka server showing the registered services:
 1. Start the Eureka server.
 2. Run the Parking Service application.
 3. Use the Postman collection to test the APIs.
+## Dependencies
+- Spring Boot Starter Web
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Eureka Client
+- H2 Database (for in-memory database)
+- Lombok (for reducing boilerplate code)
+- Spring Boot Starter Test (for testing)
+
+## Configuration
+The application is configured to connect to an H2 in-memory database. The database configuration can be found in the `application.properties` file
